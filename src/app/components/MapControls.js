@@ -12,7 +12,7 @@ export class PlayControl {
     this.map = map;
     const homeButton = document.createElement('button');
     homeButton.setAttribute("title",this.label);
-    homeButton.innerHTML = '<img src="'+this.url+'" width="24px" aria-hidden="true"></i>';
+    homeButton.innerHTML = '<img src="./potar/'+this.url+'" width="24px" aria-hidden="true"></i>';
     homeButton.addEventListener('click', (e) => {
       requestAnimationFrame(frame)
     });
@@ -39,7 +39,7 @@ export class DialogControl {
     this.map = map;
     const homeButton = document.createElement('button');
     homeButton.setAttribute("title",this.label);
-    homeButton.innerHTML = '<img src="'+this.url+'" width="24px" aria-hidden="true"></i>';
+    homeButton.innerHTML = '<img src="./potar/'+this.url+'" width="24px" aria-hidden="true"></i>';
     homeButton.addEventListener('click', (e) => {
       handleDialogOpen();
     });
@@ -95,7 +95,7 @@ export class HomeControl {
     homeButton.setAttribute("title",this.label);
     homeButton.innerHTML = '<img src="'+this.url+'" width="24px" aria-hidden="true"></i>';
     homeButton.addEventListener('click', (e) => {
-      window.location="https://termat.github.io/potavi"
+      window.location="https://termat.github.io/potar"
     });
     this.container = document.createElement('div');
     this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';

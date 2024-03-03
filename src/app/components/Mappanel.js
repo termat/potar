@@ -148,7 +148,7 @@ const vector={
 
 export const itemData = [];
 const createData=()=>{
-    let url="./potar/pota_data.csv";
+    let url="./geojson/pota_data.csv";
     d3.csv(url, function(data) {
         itemData.push(data);
     }).then(function(){

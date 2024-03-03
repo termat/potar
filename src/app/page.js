@@ -2,6 +2,7 @@
 import Dashboard from './components/Dashboard'
 import {useSearchParams } from 'next/navigation'
 
+const searchParams = useSearchParams();
 let page="";
 
 export default function Home() {
@@ -11,7 +12,6 @@ export default function Home() {
 }
 
 const isItem=()=>{
-  const searchParams = useSearchParams();
   if(searchParams.get("p")){
     page=searchParams.get("p");
     return false;

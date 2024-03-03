@@ -1,0 +1,33 @@
+{
+  "name": "potar",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.14",
+    "@mui/material": "^5.14.14",
+    "@turf/turf": "^6.5.0",
+    "axios": "^1.5.1",
+    "d3": "^7.8.5",
+    "deck.gl": "^8.9.34",
+    "eslint-config-next": "^14.1.0",
+    "mapbox-gl": "^3.1.2",
+    "next": "^14.1.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "worker-loader": "^3.0.8"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10",
+    "eslint": "^8",
+    "postcss": "^8",
+    "tailwindcss": "^3"
+  }
+}

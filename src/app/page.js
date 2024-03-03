@@ -11,11 +11,21 @@ export default function Home() {
 }
 
 const isItem=()=>{
-  const searchParams = useSearchParams();
-  if(searchParams.get("p")){
-    page=searchParams.get("p");
+  const arg=getArg(window.location.search)
+  if(arg["p"]){
+    page=arg["p"];
     return false;
   }else{
     return true;
   }
+}
+
+const getArg=(search)=>{
+  var arg = new Object;
+  var pair=search.substring(1).split('&');
+  for(var i=0;pair[i];i++) {
+      var kv = pair[i].split('=');
+      arg[kv[0]]=kv[1];
+  }
+  return arg;
 }

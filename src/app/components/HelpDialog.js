@@ -10,8 +10,6 @@ import Link from '@mui/material/Link';
 import { Box } from '@mui/material';
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import Image from 'next/image'
-import { basePath } from "../../next.config" // 追加
-const BASE_PATH = basePath ? basePath : "" // 追加
 
 function Copyright() {
   return (
@@ -64,7 +62,7 @@ export default function DataTableDialog(props) {
           </Toolbar>
         </AppBar>
         <div style={{marginTop:60}}>
-          <Image src={'${BASE_PATH}/icons/back2.jpg'} width={1920} height={461} style={img_style} alt={'top'} />
+          <Image src={'./icons/back2.jpg'} width={1920} height={461} style={img_style} alt={'top'} />
           <Box textAlign="center">
           <h1 style={{fontSize: "24px",margin: "6px"}}><b>Potar ： ポタリングした地域を3D地図で俯瞰するWebアプリです。</b></h1>
           <p style={{fontSize: "18px",margin: "6px"}}>ポタリング（自転車散歩）した地域を俯瞰してみたいと思い作成したWebアプリです<br />

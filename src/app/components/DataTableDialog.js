@@ -140,7 +140,7 @@ export default function DataTableDialog(props) {
         {itemList.map((item) => (
           <ImageListItem key={item.no}>
             <Image
-              src={"/images/"+item.img}
+              src={"./images/"+item.img}
               alt={item.title}
               width={640}
               height={480}

@@ -110,7 +110,7 @@ export default function DataTableDialog(props) {
   };
 
   return (
-    <div>
+    <div {...handlers}>
       <Dialog fullScreen open={open} onClose={handleDialogClose} TransitionComponent={Transition}>
         <AppBar>
           <Toolbar>

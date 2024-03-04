@@ -69,15 +69,11 @@ export default function DataTableDialog(props) {
   const [colnum,setColnum]= useState(4);
 
   const handlers = useSwipeable({
-    onSwiped: (event) => {
-        if (event.dir == "Left") {
-          handleChange("",page-1);
-        }
-        if (event.dir == "Right") {
-          handleChange("",page+1);
-        }
-    },
-    trackMouse: true, 
+    onSwipedLeft: () => {handleChange(null,Math.max(1,page-1))},
+    onSwipedRight: () => {handleChange(null,Math.min(Math.ceil(itemData.length/imagePrePage),page+1))},
+    delta: 10, 
+    preventScrollOnSwipe: true,
+    trackMouse: true,
   });
 
   handleDialogOpen = () => {

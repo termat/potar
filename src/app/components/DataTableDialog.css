@@ -1,0 +1,4 @@
+.ReactSwipeableBottomSheet--closed,
+.ReactSwipeableBottomSheet--open {
+    overflow: hidden !important;
+}

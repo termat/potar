@@ -23,6 +23,7 @@ import { endRunning } from './ControlBar';
 import Image from 'next/image';
 import * as d3 from 'd3';
 import { useSwipeable } from "react-swipeable";
+import './DataTableDialog.css';
 
 const imagePrePage=8;
 

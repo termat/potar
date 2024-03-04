@@ -12,7 +12,7 @@ import { DialogControl,HelpControl} from './MapControls';
 import {setSlider,endRunning} from './ControlBar';
 import axios from 'axios';
 import {imagePop,imageClose} from './Imagepopup';
-import { jumpData } from './DataTableDialog';
+import { jumpData} from './DataTableDialog';
 
 const photo_URL="https://www.termat.net/photo/get/bounds/";
 const image_URL="https://www.termat.net/photo/get/image/";

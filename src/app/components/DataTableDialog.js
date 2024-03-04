@@ -22,6 +22,7 @@ import { stop } from './DataLoader';
 import { endRunning } from './ControlBar';
 import Image from 'next/image';
 import * as d3 from 'd3';
+import { useSwipeable } from "react-swipeable";
 
 const imagePrePage=8;
 
@@ -67,6 +68,18 @@ export default function DataTableDialog(props) {
   const [itemList, setData] = useState([]);
   const [colnum,setColnum]= useState(4);
 
+  const handlers = useSwipeable({
+    onSwiped: (event) => {
+        if (event.dir == "Left") {
+          handleChange("",page-1);
+        }
+        if (event.dir == "Right") {
+          handleChange("",page+1);
+        }
+    },
+    trackMouse: true, 
+  });
+
   handleDialogOpen = () => {
     const mql1 = window.matchMedia("(orientation: landscape)");
     if(mql1.matches){
@@ -108,7 +121,7 @@ export default function DataTableDialog(props) {
               onChange={handleChange}
               renderItem={(item) => (
               <PaginationItem
-                style={{ fontSize: `24px` }}
+                style={{ fontSize: `18px` }}
                 slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
                 {...item}
               />
@@ -127,7 +140,7 @@ export default function DataTableDialog(props) {
         {itemList.map((item) => (
           <ImageListItem key={item.no}>
             <Image
-              src={"./images/"+item.img}
+              src={"/images/"+item.img}
               alt={item.title}
               width={640}
               height={480}

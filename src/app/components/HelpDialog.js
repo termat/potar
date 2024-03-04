@@ -10,6 +10,7 @@ import Link from '@mui/material/Link';
 import { Box } from '@mui/material';
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import Image from 'next/image'
+import {handleDialogOpen} from './DataTableDialog';
 
 function Copyright() {
   return (
@@ -25,6 +26,14 @@ function Copyright() {
 }
 
 export let handleHelpDialogOpen;
+let handleDialogClose;
+
+const closeDialog=()=>{
+  handleDialogClose();
+  setTimeout(() => {
+    handleDialogOpen();
+  }, 1000);
+}
 
 const img_style = {
   width: "100%" 
@@ -41,7 +50,7 @@ export default function DataTableDialog(props) {
     setOpen(true);
   };
 
-  const handleDialogClose = () => {
+  handleDialogClose = () => {
     setOpen(false);
   };
 
@@ -62,13 +71,13 @@ export default function DataTableDialog(props) {
           </Toolbar>
         </AppBar>
         <div style={{marginTop:60}}>
-          <Image src={'./icons/back2.jpg'} width={1920} height={461} style={img_style} alt={'top'} />
+          <Image src={'/icons/back2.jpg'} width={1920} height={461} style={img_style} alt={'top'} />
           <Box textAlign="center">
           <h1 style={{fontSize: "24px",margin: "6px"}}><b>Potar ： ポタリングした地域を3D地図で俯瞰するWebアプリです。</b></h1>
           <p style={{fontSize: "18px",margin: "6px"}}>ポタリング（自転車散歩）した地域を俯瞰してみたいと思い作成したWebアプリです<br />
             自転車で走った経路が、3D地図上の俯瞰画像が表示されます。<br />
             実際に走った経路を俯瞰してみると小さな発見があって結構面白いです。<br />
-            <Button variant="contained" style={{margin:"10px"}} size="large" component="a" onClick={handleDialogClose}>　開　始　</Button>
+            <Button variant="contained" style={{margin:"10px"}} size="large" component="a" onClick={closeDialog}>　開　始　</Button>
             <br />
              </p>
             <hr />

@@ -23,6 +23,7 @@ import { endRunning } from './ControlBar';
 import Image from 'next/image';
 import * as d3 from 'd3';
 import { useSwipeable } from "react-swipeable";
+import DisableZoom from './DisableZoom';
 
 const imagePrePage=8;
 
@@ -107,6 +108,7 @@ export default function DataTableDialog(props) {
 
   return (
     <div {...handlers}>
+      <DisableZoom />
       <Dialog fullScreen open={open} onClose={handleDialogClose} TransitionComponent={Transition}>
         <AppBar>
           <Toolbar>

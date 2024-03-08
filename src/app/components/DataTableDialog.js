@@ -142,6 +142,7 @@ export default function DataTableDialog(props) {
               height={480}
               loading="lazy"
               onClick={() => jumpData(item.json)}
+              {...handlers}
             />
             <ImageListItemBar
               title={item.title}

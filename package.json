@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.14",
     "@mui/material": "^5.14.14",
+    "@mui/x-charts": "^6.19.5",
     "@turf/turf": "^6.5.0",
     "axios": "^1.5.1",
     "d3": "^7.8.5",

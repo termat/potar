@@ -8,11 +8,12 @@ mapbox.workerClass = MapboxWorker;
 import * as d3 from 'd3';
 import * as turf from '@turf/turf';
 import {DrawerOpenControl,handleDrawerClose} from './Dashboard';
-import { DialogControl,HelpControl} from './MapControls';
+import { DialogControl,HelpControl,ChartControl} from './MapControls';
 import {setSlider,endRunning} from './ControlBar';
 import axios from 'axios';
 import {imagePop,imageClose} from './Imagepopup';
 import { jumpData} from './DataTableDialog';
+import { setXYData,setCurrentIndex } from './ChartBar';
 
 const photo_URL="https://www.termat.net/photo/get/bounds/";
 const image_URL="https://www.termat.net/photo/get/image/";
@@ -49,7 +50,7 @@ export const jumpTo=(data)=>{
 
 const propcLine=(c)=>{
     c.forEach(e =>{
-        targetRoute.push(e);
+        targetRoute.push([e[0],e[1],c.properties.z]);
     });
 }
 
@@ -66,7 +67,7 @@ export const parseGeojson=(json)=>{
     array.forEach(e => {
         let c=e.geometry.coordinates;
         if(e.geometry.type==="Point"){
-            targetRoute.push(c);
+            targetRoute.push([c[0],c[1],e.properties.z]);
         }else if(e.geometry.type==="LineString"){
             propcLine(c,targetRoute);
         }
@@ -76,6 +77,7 @@ export const parseGeojson=(json)=>{
     start=null;
     phase=0.0;
     setSlider(0);
+    setCurrentIndex(0);
 };
 
 export const setPhase=(val)=>{
@@ -217,6 +219,7 @@ export default function Mappanel(props) {
         map.current.addControl(new DrawerOpenControl("./icons/toggle.png","サイドパネル"), 'top-left');
         map.current.addControl(new DialogControl("./icons/cycle.png","データ一覧"), 'top-left');
         map.current.addControl(new HelpControl("./icons/help.png",'ヘルプ'), 'top-left');
+        map.current.addControl(new ChartControl("./icons/hill01.png",'断面図'),'top-right');
 
         map.current.on('load', () => {
             showPage=props.page;
@@ -378,10 +381,33 @@ const setGeojsonLayer=(map)=>{
                 'circle-stroke-opacity': 0.05
             },
         });
-        routeDistance = turf.length(turf.lineString(targetRoute));
+        const line=turf.lineString(targetRoute);
+        routeDistance = turf.length(line);
         speed=1/((routeDistance/10)*60000);
+        setXYData(chartXY(targetRoute));
     }
 };
+
+const chartXY=(array)=>{
+    let xp=[];
+    let yp=[];
+    let dist=0;
+    for(let i=1;i<array.length;i++){
+        if(i==1){
+            xp.push(0);
+            yp.push(array[i-1][2])
+            dist=dist+turf.length(turf.lineString([array[i-1],array[i]]));
+            xp.push(dist);
+            yp.push(array[i][2]);
+        }else{
+            dist=dist+turf.length(turf.lineString([array[i-1],array[i]]));
+            xp.push(dist);
+            yp.push(array[i][2]);
+        }
+    }
+    return {x:xp,y:yp};
+};
+
 
 const setTerrain=(map)=>{
     map.addSource('mapbox-dem', {
@@ -496,16 +522,6 @@ const setSky=(map)=>{
     }
 };
 
-const getArg=(search)=>{
-    var arg = new Object;
-    var pair=search.substring(1).split('&');
-    for(var i=0;pair[i];i++) {
-        var kv = pair[i].split('=');
-        arg[kv[0]]=kv[1];
-    }
-    return arg;
-}
-
 export const addPhoto=(map,xmin,xmax,ymin,ymax)=>{
     const url=photo_URL+xmin+"/"+ymin+"/"+(xmax-xmin)+"/"+(ymax-ymin);
     axios.get(url)
@@ -586,6 +602,7 @@ const frame=(time)=>{
         }
     }
     setSlider(phase);
+    setCurrentIndex(phase);
     if (phase >= 1) {
         setTimeout(function () {
             running=false;
@@ -634,4 +651,10 @@ export const loadData=(p)=>{
     })();
 };
 
-
+export const stop=()=>{
+    if(running){
+        running=false;
+        cancelAnimationFrame(runAni);
+        start=null;
+    }
+};

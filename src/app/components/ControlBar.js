@@ -3,6 +3,7 @@ import ListItem from '@mui/material/ListItem';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import {startMovie,stopMovie,setPhase,ieRunning,setSpeed} from './Mappanel'
+import { setCurrentIndex } from './ChartBar';
 
 export let setSlider;
 export let endRunning;
@@ -107,5 +108,8 @@ export default class ControlBar extends Component {
 const onChangeProgress=(value)=>{};
 
 const onChangeVal=(val)=>{
-    if(!ieRunning())setPhase(val.target.value/100.0);
+    if(!ieRunning()){
+        setPhase(val.target.value/100.0);
+        setCurrentIndex(val.target.value/100.0);
+    }
 };

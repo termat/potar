@@ -15,6 +15,7 @@ import HelpDialog from './HelpDialog';
 import AlertDialog from './AlertDialog';
 import Geocoder from './Geocoder';
 import Imagepopup from './Imagepopup';
+import ChartBar from './ChartBar';
 
 const drawerWidth = 250;
 
@@ -91,6 +92,7 @@ export default function Dashboard(props) {
       <Main open={open}>
         <DrawerHeader />
         <Mappanel page={props.page} />
+        <ChartBar />
         <ControlBar /> 
       </Main>
       <Imagepopup />

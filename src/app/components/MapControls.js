@@ -1,5 +1,6 @@
 import { handleDialogOpen } from './DataTableDialog'
 import { handleHelpDialogOpen } from "./HelpDialog";
+import { getChartVisible,setChartVisible } from './ChartBar';
 
 export class PlayControl {
 
@@ -96,6 +97,38 @@ export class HomeControl {
     homeButton.innerHTML = '<img src="'+this.url+'" width="24px" aria-hidden="true"></i>';
     homeButton.addEventListener('click', (e) => {
       window.location="https://termat.github.io/potar"
+    });
+    this.container = document.createElement('div');
+    this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+    this.container.appendChild(homeButton);
+    return this.container;
+  }
+
+  onRemove() {
+    this.container.parentNode.removeChild(this.container);
+    this.map = undefined;
+  }
+}
+
+export class ChartControl {
+
+  constructor(url,label){
+    this.url=url;
+    this.label=label;
+  }
+
+  onAdd(map) {
+    this.map = map;
+    const homeButton = document.createElement('button');
+    homeButton.setAttribute("title",this.label);
+    homeButton.innerHTML = '<img src="'+this.url+'" width="24px" aria-hidden="true"></i>';
+    homeButton.addEventListener('click', (e) => {
+      const flg=getChartVisible();
+      if(flg==="hidden"){
+        setChartVisible("visible");
+      }else{
+        setChartVisible("hidden");
+      }
     });
     this.container = document.createElement('div');
     this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';

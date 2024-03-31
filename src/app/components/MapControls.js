@@ -129,7 +129,7 @@ export class RouteControl {
     this.map = map;
     const homeButton = document.createElement('button');
     homeButton.setAttribute("title",this.label);
-    homeButton.innerHTML = '<img src="./potar/'+this.url+'" width="24px" aria-hidden="true"></i>';
+    homeButton.innerHTML = '<img src="'+this.url+'" width="24px" aria-hidden="true"></i>';
     homeButton.addEventListener('click', (e) => {
       clearRoute();
       map.addLayer({
@@ -144,10 +144,7 @@ export class RouteControl {
             'line-cap': 'round',
             'line-join': 'round'
         }
-      });
-
-
-      
+      });    
       let bbox=turf.bbox(stores);
       map.fitBounds(bbox, {padding: 20});
     });

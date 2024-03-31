@@ -18,7 +18,6 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import { loadData,itemData,stop} from './Mappanel';
-//import { stop } from './DataLoader';
 import { endRunning } from './ControlBar';
 import Image from 'next/image';
 import * as d3 from 'd3';
@@ -136,7 +135,7 @@ export default function DataTableDialog(props) {
         {itemList.map((item) => (
           <ImageListItem key={item.no}>
             <Image
-              src={"./images/"+item.img}
+              src={"/images/"+item.img}
               alt={item.title}
               width={640}
               height={480}

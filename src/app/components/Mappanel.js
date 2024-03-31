@@ -8,7 +8,7 @@ mapbox.workerClass = MapboxWorker;
 import * as d3 from 'd3';
 import * as turf from '@turf/turf';
 import {DrawerOpenControl,handleDrawerClose} from './Dashboard';
-import { DialogControl,HelpControl,ChartControl} from './MapControls';
+import { DialogControl,HelpControl,ChartControl,RouteControl} from './MapControls';
 import {setSlider,endRunning} from './ControlBar';
 import axios from 'axios';
 import {imagePop,imageClose} from './Imagepopup';
@@ -52,7 +52,27 @@ const propcLine=(c)=>{
     c.forEach(e =>{
         targetRoute.push([e[0],e[1],c.properties.z]);
     });
-}
+};
+
+export const clearRoute=()=>{
+    if(targetRoute){
+        let flg = window.confirm('選択中のデータを消去します？');
+        if(!flg)return;
+    }
+    if (mapObj.getLayer('point'))mapObj.removeLayer('point');
+    if (mapObj.getSource('point'))mapObj.removeSource('point');
+    if (mapObj.getLayer('trace'))mapObj.removeLayer('trace');
+    if (mapObj.getSource('trace'))mapObj.removeSource('trace');
+    if (mapObj.getLayer('photo'))mapObj.removeLayer('photo');
+    if (mapObj.getSource('photo'))mapObj.removeSource('photo');
+    if (mapObj.getLayer('list'))mapObj.removeLayer('list');
+    stopMovie();
+    targetRoute=null;
+    phase=0.0;
+    setSlider(0);
+    setCurrentIndex(0);
+    setXYData({x:[],y:[]});
+};
 
 export const parseGeojson=(json)=>{
     if (mapObj.getLayer('point'))mapObj.removeLayer('point');
@@ -61,6 +81,7 @@ export const parseGeojson=(json)=>{
     if (mapObj.getSource('trace'))mapObj.removeSource('trace');
     if (mapObj.getLayer('photo'))mapObj.removeLayer('photo');
     if (mapObj.getSource('photo'))mapObj.removeSource('photo');
+    if (mapObj.getLayer('list'))mapObj.removeLayer('list');
     stopMovie();
     targetRoute=[];
     let array=json.features;
@@ -133,7 +154,7 @@ const PHT= {
         "id": "t_pale",
         "type": "raster",
         "source": "t_pale",
-        "minzoom": 8,
+        "minzoom": 5,
         "maxzoom": 18
     }]
 };
@@ -144,7 +165,7 @@ const vector={
     "tiles": [
         "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pbf"
     ],
-    "minzoom":9,
+    "minzoom": 5,
     "maxzoom": 16
   };
 
@@ -198,8 +219,8 @@ export default function Mappanel(props) {
             center: [139.692704, 35.689526], 
             zoom: 14,
             maxZoom: 18,
-            minZoom: 8,
-            pitch: 65,
+            minZoom: 5,
+            pitch: 75,
             bearing: 0,
             interactive: true,
             localIdeographFontFamily: false,
@@ -218,6 +239,7 @@ export default function Mappanel(props) {
         map.current.addControl(new mapbox.NavigationControl());
         map.current.addControl(new DrawerOpenControl("./icons/toggle.png","サイドパネル"), 'top-left');
         map.current.addControl(new DialogControl("./icons/cycle.png","データ一覧"), 'top-left');
+        map.current.addControl(new RouteControl("./icons/road.png","ルート図"), 'top-left');
         map.current.addControl(new HelpControl("./icons/help.png",'ヘルプ'), 'top-left');
         map.current.addControl(new ChartControl("./icons/hill01.png",'断面図'),'top-right');
 
@@ -234,6 +256,10 @@ export default function Mappanel(props) {
                     map.current.addImage('custom-marker', image);
                 }
             );
+            map.current.addSource('list', {
+                type: 'geojson',
+                data: '/geojson/list.geojson'
+            });
         });
 
         map.current.on('touchstart', (e)=> {

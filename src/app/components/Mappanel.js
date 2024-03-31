@@ -239,7 +239,7 @@ export default function Mappanel(props) {
         map.current.addControl(new mapbox.NavigationControl());
         map.current.addControl(new DrawerOpenControl("./icons/toggle.png","サイドパネル"), 'top-left');
         map.current.addControl(new DialogControl("./icons/cycle.png","データ一覧"), 'top-left');
-        map.current.addControl(new RouteControl("./icons/road.png","ルート図"), 'top-left');
+//        map.current.addControl(new RouteControl("./icons/road.png","ルート図"), 'top-left');
         map.current.addControl(new HelpControl("./icons/help.png",'ヘルプ'), 'top-left');
         map.current.addControl(new ChartControl("./icons/hill01.png",'断面図'),'top-right');
 
